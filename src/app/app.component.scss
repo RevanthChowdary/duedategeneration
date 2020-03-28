@@ -1,0 +1,29 @@
+.btnClass{
+    width: 90px !important;
+}
+.buttonClass{
+    text-align: center;
+    margin: 1.25rem;
+}
+.displayClass{
+    margin: 10px;
+    border: 1px solid deepskyblue;
+}
+
+.mainDiv{
+    border: 1px solid beige;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 5px 10px 8px #888888;
+}
+
+.checkBox{
+    padding: 10px;
+
+    &:first-child {
+        padding-left: 0;
+    }
+    &:last-child {
+        padding-right: 0;
+    }
+}

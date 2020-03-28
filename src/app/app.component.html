@@ -1,0 +1,142 @@
+<div class="row no-gutters" *ngIf="configuration">
+  <mat-tab-group class="ml-3 mainDiv" [(selectedIndex)]="selectedIndex" (selectedTabChange)="tabChanged($event)">
+    <mat-tab label="Configure WeekOff">
+      <div class="ml-4 mt-3">
+        <div *ngFor="let day of weekDays;let i = index;">
+          <mat-checkbox (change)="weekOffSelect($event.checked,i)">{{day}}</mat-checkbox>
+        </div>
+        <!-- <button class="btn btn-secondary btn-sm" (click)="previousStep()"> Previous </button> -->
+        <div class="buttonClass">
+          <button class="btn btn-primary btn-sm btnClass ml-3" (click)="nextStep()"> Next </button>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Daily">
+      <div class="ml-4 mt-3">
+        <h5>Every 1 Day at 11:59PM</h5>
+        <div class="row no-gutters">
+          <div class="col-md-2 mt-3">
+            <mat-label>Start From :</mat-label>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field>
+              <mat-label>Choose a date</mat-label>
+              <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="addEvent($event)" disabled>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-2 mt-3">
+            <mat-label>Ends By :</mat-label>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field>
+              <mat-label>Choose a date</mat-label>
+              <input matInput [matDatepicker]="Endpicker" [min]="endMinDate" (dateChange)="changeEndDate($event)"
+                disabled>
+              <mat-datepicker-toggle matSuffix [for]="Endpicker"></mat-datepicker-toggle>
+              <mat-datepicker #Endpicker disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="buttonClass">
+        <button class="btn btn-secondary btn-sm btnClass ml-3" (click)="previousStep()"> Previous </button>
+        <button class="btn btn-primary btn-sm btnClass ml-3" (click)="nextDailyStep()"> Next </button>
+      </div>
+    </mat-tab>
+    <mat-tab label="Weekly">
+      <div class="ml-4 mt-3">
+        <mat-checkbox class="checkBox"
+        *ngFor="let day of weekDays;let i = index;" (change)="weekSelect($event.checked,i)">{{day}}
+        </mat-checkbox>
+        <h5>Every 1 Week at 11:59PM</h5>
+        <div class="row no-gutters">
+          <div class="col-md-2 mt-3">
+            <mat-label>Start From :</mat-label>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field>
+              <mat-label>Choose a date</mat-label>
+              <input matInput [matDatepicker]="stapicker" [min]="minDate" (dateChange)="startWeekDate($event)" disabled>
+              <mat-datepicker-toggle matSuffix [for]="stapicker"></mat-datepicker-toggle>
+              <mat-datepicker #stapicker disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-2 mt-3">
+            <mat-label>Ends By :</mat-label>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field>
+              <mat-label>Choose a date</mat-label>
+              <input matInput [matDatepicker]="Enpicker" [min]="endWeekMinDate" (dateChange)="endWeekDate($event)"
+                disabled>
+              <mat-datepicker-toggle matSuffix [for]="Enpicker"></mat-datepicker-toggle>
+              <mat-datepicker #Enpicker disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="buttonClass">
+        <button class="btn btn-secondary btn-sm btnClass ml-3" (click)="previousStep()"> Previous </button>
+        <button class="btn btn-primary btn-sm btnClass ml-3" (click)="nextWeekStep()"> Next </button>
+      </div>
+    </mat-tab>
+    <!-- <mat-tab label="Yearly"> Content 3 </mat-tab/> -->
+    <mat-tab label="One Time">
+      <h5>Once On selected Date</h5>
+      <div class="row no-gutters">
+        <div class="col-md-2 mt-3">
+          <mat-label>Select Date :</mat-label>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="onepicker" [min]="minDate" (dateChange)="oneDate($event)" disabled>
+            <mat-datepicker-toggle matSuffix [for]="onepicker"></mat-datepicker-toggle>
+            <mat-datepicker #onepicker disabled="false"></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="buttonClass">
+        <button class="btn btn-secondary btn-sm btnClass ml-3" (click)="previousStep()"> Previous </button>
+        <button class="btn btn-success btn-sm btnClass ml-3" (click)="generateDueDates()"> Generate Due Dates</button>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+<div class="no-gutters" *ngIf="!configuration">
+  <div class="row ml-3">
+    <div class="col-md-3 displayClass">
+      <h4>Daily</h4>
+    </div>
+    <div class="displayClass">
+      <h5 *ngFor='let dt of dueDatesDaily'>
+        {{dt}}
+      </h5>
+    </div>
+  </div>
+  <div class="row ml-3">
+    <div class="col-md-3 displayClass">
+      <h4>Weekly</h4>
+    </div>
+    <div class="displayClass">
+      <h5 *ngFor='let dt of dueDatesWeek'>
+        {{dt}}
+      </h5>
+    </div>
+  </div>
+  <div class="row ml-3">
+    <div class="col-md-3 displayClass">
+      <h4>One time</h4>
+    </div>
+    <div class="displayClass">
+      <h5>
+        {{oneTime}}
+      </h5>
+    </div>
+  </div>
+  <div class="buttonClass">
+    <button class="btn btn-secondary btn-sm" (click)="backToConfiguration()"> Back </button>
+  </div>
+</div>
