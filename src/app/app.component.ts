@@ -70,7 +70,6 @@ export class AppComponent {
 
   public oneDate(event: MatDatepickerInputEvent<Date>) {
     this.oneTime = event.value;
-    console.log(this.oneTime);
   }
 
   public generateDueDates() {
@@ -109,7 +108,6 @@ export class AppComponent {
       this.dailyDueChild(date, diff, 20);
       this.dueDatesDaily.push('ETC...')
     }
-    console.log(this.dueDatesDaily)
   }
 
   public dailyDueChild(date, diff, daysDiff) {
@@ -154,7 +152,6 @@ export class AppComponent {
       this.weekDueChild(date, 100, diff);
       this.dueDatesWeek.push('ETC...');
     }
-    console.log(this.dueDatesWeek);
   }
 
   public weekDueChild(date, daysDiff, diff) {
