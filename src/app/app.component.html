@@ -2,7 +2,7 @@
   <mat-tab-group class="ml-3 mainDiv" [(selectedIndex)]="selectedIndex" (selectedTabChange)="tabChanged($event)">
     <mat-tab label="Configure WeekOff">
       <div class="ml-4 mt-3">
-        <div *ngFor="let day of weekDays;let i = index;">
+        <div *ngFor="let day of weekDays1;let i = index;">
           <mat-checkbox (change)="weekOffSelect($event.checked,i)">{{day}}</mat-checkbox>
         </div>
         <!-- <button class="btn btn-secondary btn-sm" (click)="previousStep()"> Previous </button> -->
@@ -48,7 +48,7 @@
     <mat-tab label="Weekly">
       <div class="ml-4 mt-3">
         <mat-checkbox class="checkBox"
-        *ngFor="let day of weekDays;let i = index;" (change)="weekSelect($event.checked,i)">{{day}}
+        *ngFor="let day of weekDays1;let i = index;" (change)="weekSelect($event.checked,i)">{{day}}
         </mat-checkbox>
         <h5>Every 1 Week at 11:59PM</h5>
         <div class="row no-gutters">

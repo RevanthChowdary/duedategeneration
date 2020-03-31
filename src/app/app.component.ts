@@ -14,7 +14,7 @@ export class AppComponent {
   // [(selectedIndex)]="selectedIndex" (selectedTabChange)="tabChanged($event)"
   public selectedIndex = 0;
 
-  public weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  public weekDays1 = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   public weekOffListSelected = [];
   public startDate;
   public endDate;
@@ -113,21 +113,21 @@ export class AppComponent {
   }
 
   public dailyDueChild(date, diff, daysDiff) {
-    let ind = this.weekOffListSelected.find(x => x == 0);
-    console.log(ind)
     for (let i = 0; i < daysDiff; i++) {
       if (date > this.endDate) {
         break;
       }
       if (this.weekOffListSelected.length !== 0) {
-        this.weekOffListSelected.forEach(el => {
-          let day = date.getDay();
-          if (day != el) {
-            this.dueDatesDaily.push(new Date(date.setDate(date.getDate() + diff)))
-          } else {
-            date.setDate(date.getDate() + diff)
-          }
+        let day = date.getDay();
+        let dat = this.weekOffListSelected.filter(x => {
+          if (x === day) { return true }
         })
+        let length = dat.length;
+        if (length == 0) {
+          this.dueDatesDaily.push(new Date(date.setDate(date.getDate() + diff)))
+        } else {
+          date.setDate(date.getDate() + diff)
+        }
       } else {
         this.dueDatesDaily.push(new Date(date.setDate(date.getDate() + diff)))
       }
@@ -180,5 +180,10 @@ export class AppComponent {
 
   public backToConfiguration() {
     this.configuration = true;
+    this.dueDatesDaily = [];
+    this.dueDatesWeek = [];
+    this.oneTime = null;
+    this.weekOffListSelected = [];
+    this.weekListSelected = [];
   }
 }
